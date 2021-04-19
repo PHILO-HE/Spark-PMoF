@@ -192,7 +192,9 @@ void NodeManager::addOrUpdateRecord(Json::Value record){
   const std::unique_ptr<Json::CharReader> reader(builder.newCharReader());
   if (!reader->parse(rawJson.c_str(), rawJson.c_str() + rawJsonLength, &root,
                       &err)) {
+    // TODO: fix this issue. TO avoid segmentation fault, skip the remaining code.
     std::cout << "Error occurred in addOrUpdateRecord." << std::endl;
+    return;
   }
 
   Json::Value recordArray = root["data"];
@@ -241,7 +243,9 @@ bool NodeManager::hostExists(string host){
   const std::unique_ptr<Json::CharReader> reader(builder.newCharReader());
   if (!reader->parse(rawJson.c_str(), rawJson.c_str() + rawJsonLength, &root,
                       &err)) {
+    // TODO: fix this issue. Assume node is live, so return true temporarily.
     std::cout << "Error occurred in checking hostExists." << std::endl;
+    return true;
   }
 
   Json::Value recordArray = root["data"];
@@ -340,7 +344,9 @@ int NodeManager::checkNode(){
     Json::CharReaderBuilder builder;
     const std::unique_ptr<Json::CharReader> reader(builder.newCharReader());
     if (!reader->parse(rawJson.c_str(), rawJson.c_str() + rawJsonLength, &root, &err)) {
+      // TODO: fix this issue. To avoid segmentation fault, skip remaining code.
       std::cout << "Error occurred in checking node." << std::endl;
+      continue;
     }
 
     Json::Value recordArray = root["data"];
