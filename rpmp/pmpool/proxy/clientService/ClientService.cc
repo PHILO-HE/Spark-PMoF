@@ -49,6 +49,7 @@ void Worker::addTask(std::shared_ptr<ProxyRequest> request) {
 void Worker::abort() {}
 
 int Worker::entry() {
+  std::cout << "ClientService worker is working..\n";
   std::shared_ptr<ProxyRequest> request;
   bool res = pendingRecvRequestQueue_.wait_dequeue_timed(
       request, std::chrono::milliseconds(1000));
@@ -166,8 +167,8 @@ bool ClientService::startService() {
   int buffer_number = config_->get_network_buffer_num();
   int buffer_size = config_->get_network_buffer_size();
   server_ = std::make_shared<Server>(worker_number, buffer_number);
-  if(server_->init() != 0){
-    cout<<"HPNL server init failed"<<endl;
+  if (server_->init() != 0) {
+    cout << "HPNL server init failed" << endl;
     return false;
   }
   chunkMgr_ = std::make_shared<ChunkPool>(server_.get(), buffer_size, buffer_number);

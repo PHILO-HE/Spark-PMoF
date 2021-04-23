@@ -71,6 +71,7 @@ void NodeManagerWorker::abort() {}
 
 int NodeManagerWorker::entry()
 {
+  std::cout << "NodeManagerWorker is working..\n";
   std::shared_ptr<HeartbeatRequest> request;
   bool res = pendingRecvRequestQueue_.wait_dequeue_timed(
       request, std::chrono::milliseconds(1000));
@@ -381,7 +382,6 @@ void NodeManager::init()
 
 bool NodeManager::launchServer()
 {
-
   int worker_number = config_->get_network_worker_num();
   int buffer_number = config_->get_network_buffer_num();
   int buffer_size = config_->get_network_buffer_size();
